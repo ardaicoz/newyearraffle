@@ -286,13 +286,23 @@
             const savedMissions = localStorage.getItem('missions');
             
             if (savedParticipants) {
-                participants = JSON.parse(savedParticipants);
-                updateParticipantList();
+                try {
+                    participants = JSON.parse(savedParticipants);
+                    updateParticipantList();
+                } catch (e) {
+                    console.error('Failed to load participants from localStorage:', e);
+                    localStorage.removeItem('participants');
+                }
             }
             
             if (savedMissions) {
-                missions = JSON.parse(savedMissions);
-                updateMissionList();
+                try {
+                    missions = JSON.parse(savedMissions);
+                    updateMissionList();
+                } catch (e) {
+                    console.error('Failed to load missions from localStorage:', e);
+                    localStorage.removeItem('missions');
+                }
             }
 
             // Set up event listeners after DOM is ready
@@ -340,17 +350,42 @@
             });
         }
 
+        function showMessage(message, type = 'error') {
+            // Remove any existing message
+            const existingMessage = document.querySelector('.temp-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // Create new message element
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${type} temp-message`;
+            messageDiv.textContent = message;
+            messageDiv.style.marginBottom = '15px';
+            
+            // Insert at the top of the container
+            const container = document.querySelector('.container');
+            container.insertBefore(messageDiv, container.firstChild);
+            
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
         function addParticipant() {
             const input = document.getElementById('participantInput');
             const name = input.value.trim();
             
             if (name === '') {
-                alert('Please enter a participant name');
+                showMessage('Please enter a participant name');
+                input.focus();
                 return;
             }
             
             if (participants.includes(name)) {
-                alert('This participant is already in the list');
+                showMessage('This participant is already in the list');
+                input.focus();
                 return;
             }
             
@@ -385,12 +420,14 @@
             const mission = input.value.trim();
             
             if (mission === '') {
-                alert('Please enter a mission');
+                showMessage('Please enter a mission');
+                input.focus();
                 return;
             }
             
             if (missions.includes(mission)) {
-                alert('This mission is already in the list');
+                showMessage('This mission is already in the list');
+                input.focus();
                 return;
             }
             
