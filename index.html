@@ -268,14 +268,20 @@
         let drawnResults = [];
 
         // Helper function to escape HTML to prevent XSS attacks
+        // Using character replacement for efficiency
         function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
         }
 
         // Load data from localStorage on page load
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const savedParticipants = localStorage.getItem('participants');
             const savedMissions = localStorage.getItem('missions');
             
@@ -288,7 +294,51 @@
                 missions = JSON.parse(savedMissions);
                 updateMissionList();
             }
-        };
+
+            // Set up event listeners after DOM is ready
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Event delegation for remove buttons
+            document.getElementById('participantList').addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'participant') {
+                    const index = parseInt(e.target.dataset.index);
+                    participants.splice(index, 1);
+                    localStorage.setItem('participants', JSON.stringify(participants));
+                    updateParticipantList();
+                    clearResults();
+                }
+            });
+
+            document.getElementById('missionList').addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'mission') {
+                    const index = parseInt(e.target.dataset.index);
+                    missions.splice(index, 1);
+                    localStorage.setItem('missions', JSON.stringify(missions));
+                    updateMissionList();
+                    clearResults();
+                }
+            });
+
+            // Add button click handlers
+            document.getElementById('addParticipantBtn').addEventListener('click', addParticipant);
+            document.getElementById('addMissionBtn').addEventListener('click', addMission);
+            document.getElementById('drawButton').addEventListener('click', performDraw);
+
+            // Allow Enter key to add participants and missions
+            document.getElementById('participantInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addParticipant();
+                }
+            });
+
+            document.getElementById('missionInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addMission();
+                }
+            });
+        }
 
         function addParticipant() {
             const input = document.getElementById('participantInput');
@@ -476,45 +526,6 @@
             resultDiv.innerHTML = '';
             drawnResults = [];
         }
-
-        // Event delegation for remove buttons
-        document.getElementById('participantList').addEventListener('click', function(e) {
-            if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'participant') {
-                const index = parseInt(e.target.dataset.index);
-                participants.splice(index, 1);
-                localStorage.setItem('participants', JSON.stringify(participants));
-                updateParticipantList();
-                clearResults();
-            }
-        });
-
-        document.getElementById('missionList').addEventListener('click', function(e) {
-            if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'mission') {
-                const index = parseInt(e.target.dataset.index);
-                missions.splice(index, 1);
-                localStorage.setItem('missions', JSON.stringify(missions));
-                updateMissionList();
-                clearResults();
-            }
-        });
-
-        // Add button click handlers
-        document.getElementById('addParticipantBtn').addEventListener('click', addParticipant);
-        document.getElementById('addMissionBtn').addEventListener('click', addMission);
-        document.getElementById('drawButton').addEventListener('click', performDraw);
-
-        // Allow Enter key to add participants and missions
-        document.getElementById('participantInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addParticipant();
-            }
-        });
-
-        document.getElementById('missionInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addMission();
-            }
-        });
     </script>
 </body>
 </html>
