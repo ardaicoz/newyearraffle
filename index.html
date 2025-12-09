@@ -267,6 +267,13 @@
         let missions = [];
         let drawnResults = [];
 
+        // Helper function to escape HTML to prevent XSS attacks
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         // Load data from localStorage on page load
         window.onload = function() {
             const savedParticipants = localStorage.getItem('participants');
@@ -319,12 +326,16 @@
                 return;
             }
             
-            list.innerHTML = participants.map(name => `
-                <div class="list-item">
-                    <span>${name}</span>
-                    <button class="btn-danger" onclick="removeParticipant('${name}')">Remove</button>
-                </div>
-            `).join('');
+            list.innerHTML = participants.map(name => {
+                const escapedName = escapeHtml(name);
+                const escapedNameForAttr = escapedName.replace(/'/g, '&#39;');
+                return `
+                    <div class="list-item">
+                        <span>${escapedName}</span>
+                        <button class="btn-danger" onclick="removeParticipant('${escapedNameForAttr}')">Remove</button>
+                    </div>
+                `;
+            }).join('');
         }
 
         function addMission() {
@@ -363,12 +374,16 @@
                 return;
             }
             
-            list.innerHTML = missions.map(mission => `
-                <div class="list-item">
-                    <span>${mission}</span>
-                    <button class="btn-danger" onclick="removeMission('${mission}')">Remove</button>
-                </div>
-            `).join('');
+            list.innerHTML = missions.map(mission => {
+                const escapedMission = escapeHtml(mission);
+                const escapedMissionForAttr = escapedMission.replace(/'/g, '&#39;');
+                return `
+                    <div class="list-item">
+                        <span>${escapedMission}</span>
+                        <button class="btn-danger" onclick="removeMission('${escapedMissionForAttr}')">Remove</button>
+                    </div>
+                `;
+            }).join('');
         }
 
         function shuffle(array) {
@@ -454,15 +469,20 @@
             resultDiv.innerHTML = `
                 <div class="result">
                     <h3>🎊 Draw Results 🎊</h3>
-                    ${drawnResults.map(result => `
-                        <div class="result-item">
-                            <div class="result-name">${result.participant}</div>
-                            <div class="result-mission">
-                                Picks: <strong>${result.pickedName}</strong><br>
-                                <span class="mission-label">Mission:</span> ${result.mission}
+                    ${drawnResults.map(result => {
+                        const escapedParticipant = escapeHtml(result.participant);
+                        const escapedPickedName = escapeHtml(result.pickedName);
+                        const escapedMission = escapeHtml(result.mission);
+                        return `
+                            <div class="result-item">
+                                <div class="result-name">${escapedParticipant}</div>
+                                <div class="result-mission">
+                                    Picks: <strong>${escapedPickedName}</strong><br>
+                                    <span class="mission-label">Mission:</span> ${escapedMission}
+                                </div>
                             </div>
-                        </div>
-                    `).join('')}
+                        `;
+                    }).join('')}
                 </div>
             `;
         }
