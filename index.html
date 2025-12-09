@@ -311,13 +311,6 @@
             clearResults();
         }
 
-        function removeParticipant(name) {
-            participants = participants.filter(p => p !== name);
-            localStorage.setItem('participants', JSON.stringify(participants));
-            updateParticipantList();
-            clearResults();
-        }
-
         function updateParticipantList() {
             const list = document.getElementById('participantList');
             
@@ -326,13 +319,12 @@
                 return;
             }
             
-            list.innerHTML = participants.map(name => {
+            list.innerHTML = participants.map((name, index) => {
                 const escapedName = escapeHtml(name);
-                const escapedNameForAttr = escapedName.replace(/'/g, '&#39;');
                 return `
                     <div class="list-item">
                         <span>${escapedName}</span>
-                        <button class="btn-danger" onclick="removeParticipant('${escapedNameForAttr}')">Remove</button>
+                        <button class="btn-danger" data-type="participant" data-index="${index}">Remove</button>
                     </div>
                 `;
             }).join('');
@@ -359,13 +351,6 @@
             clearResults();
         }
 
-        function removeMission(mission) {
-            missions = missions.filter(m => m !== mission);
-            localStorage.setItem('missions', JSON.stringify(missions));
-            updateMissionList();
-            clearResults();
-        }
-
         function updateMissionList() {
             const list = document.getElementById('missionList');
             
@@ -374,13 +359,12 @@
                 return;
             }
             
-            list.innerHTML = missions.map(mission => {
+            list.innerHTML = missions.map((mission, index) => {
                 const escapedMission = escapeHtml(mission);
-                const escapedMissionForAttr = escapedMission.replace(/'/g, '&#39;');
                 return `
                     <div class="list-item">
                         <span>${escapedMission}</span>
-                        <button class="btn-danger" onclick="removeMission('${escapedMissionForAttr}')">Remove</button>
+                        <button class="btn-danger" data-type="mission" data-index="${index}">Remove</button>
                     </div>
                 `;
             }).join('');
@@ -492,6 +476,27 @@
             resultDiv.innerHTML = '';
             drawnResults = [];
         }
+
+        // Event delegation for remove buttons
+        document.getElementById('participantList').addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'participant') {
+                const index = parseInt(e.target.dataset.index);
+                participants.splice(index, 1);
+                localStorage.setItem('participants', JSON.stringify(participants));
+                updateParticipantList();
+                clearResults();
+            }
+        });
+
+        document.getElementById('missionList').addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'mission') {
+                const index = parseInt(e.target.dataset.index);
+                missions.splice(index, 1);
+                localStorage.setItem('missions', JSON.stringify(missions));
+                updateMissionList();
+                clearResults();
+            }
+        });
 
         // Allow Enter key to add participants and missions
         document.getElementById('participantInput').addEventListener('keypress', function(e) {
