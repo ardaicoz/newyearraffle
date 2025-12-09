@@ -237,7 +237,7 @@
             <h2>👥 Participants</h2>
             <div class="input-group">
                 <input type="text" id="participantInput" placeholder="Enter participant name" />
-                <button onclick="addParticipant()">Add</button>
+                <button id="addParticipantBtn">Add</button>
             </div>
             <div id="participantList" class="list">
                 <div class="empty-message">No participants yet. Add some!</div>
@@ -248,7 +248,7 @@
             <h2>🎯 Missions</h2>
             <div class="input-group">
                 <input type="text" id="missionInput" placeholder="Enter a mission (e.g., 'Buy something funny')" />
-                <button onclick="addMission()" class="btn-secondary">Add</button>
+                <button id="addMissionBtn" class="btn-secondary">Add</button>
             </div>
             <div id="missionList" class="list">
                 <div class="empty-message">No missions yet. Add some!</div>
@@ -256,7 +256,7 @@
         </div>
 
         <div class="draw-section">
-            <button onclick="performDraw()" class="draw-button">🎲 Draw Names & Missions!</button>
+            <button id="drawButton" class="draw-button">🎲 Draw Names & Missions!</button>
         </div>
 
         <div id="result"></div>
@@ -497,6 +497,11 @@
                 clearResults();
             }
         });
+
+        // Add button click handlers
+        document.getElementById('addParticipantBtn').addEventListener('click', addParticipant);
+        document.getElementById('addMissionBtn').addEventListener('click', addMission);
+        document.getElementById('drawButton').addEventListener('click', performDraw);
 
         // Allow Enter key to add participants and missions
         document.getElementById('participantInput').addEventListener('keypress', function(e) {
