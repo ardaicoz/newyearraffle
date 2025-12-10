@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Year's Raffle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: #764ba2;
+        }
+
+        .btn-secondary:hover {
+            background: #653a8a;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 100px;
+            margin-bottom: 15px;
+        }
+
+        .list-item {
+            background: white;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .empty-message {
+            color: #999;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        .draw-section {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .draw-button {
+            font-size: 1.2em;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .draw-button:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .result h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .result-mission {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .mission-label {
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .error {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 New Year's Raffle 🎁</h1>
+        <p class="subtitle">Draw names and assign missions for gift exchange!</p>
+
+        <div class="section">
+            <h2>👥 Participants</h2>
+            <div class="input-group">
+                <input type="text" id="participantInput" placeholder="Enter participant name" />
+                <button id="addParticipantBtn">Add</button>
+            </div>
+            <div id="participantList" class="list">
+                <div class="empty-message">No participants yet. Add some!</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Missions</h2>
+            <div class="input-group">
+                <input type="text" id="missionInput" placeholder="Enter a mission (e.g., 'Buy something funny')" />
+                <button id="addMissionBtn" class="btn-secondary">Add</button>
+            </div>
+            <div id="missionList" class="list">
+                <div class="empty-message">No missions yet. Add some!</div>
+            </div>
+        </div>
+
+        <div class="draw-section">
+            <button id="drawButton" class="draw-button">🎲 Draw Names & Missions!</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let participants = [];
+        let missions = [];
+        let drawnResults = [];
+
+        // Helper function to escape HTML to prevent XSS attacks
+        // Using character replacement for efficiency
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Load data from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedParticipants = localStorage.getItem('participants');
+            const savedMissions = localStorage.getItem('missions');
+            
+            if (savedParticipants) {
+                try {
+                    participants = JSON.parse(savedParticipants);
+                    updateParticipantList();
+                } catch (e) {
+                    console.error('Failed to load participants from localStorage:', e);
+                    localStorage.removeItem('participants');
+                }
+            }
+            
+            if (savedMissions) {
+                try {
+                    missions = JSON.parse(savedMissions);
+                    updateMissionList();
+                } catch (e) {
+                    console.error('Failed to load missions from localStorage:', e);
+                    localStorage.removeItem('missions');
+                }
+            }
+
+            // Set up event listeners after DOM is ready
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Event delegation for remove buttons
+            document.getElementById('participantList').addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'participant') {
+                    const index = parseInt(e.target.dataset.index);
+                    participants.splice(index, 1);
+                    localStorage.setItem('participants', JSON.stringify(participants));
+                    updateParticipantList();
+                    clearResults();
+                }
+            });
+
+            document.getElementById('missionList').addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn-danger') && e.target.dataset.type === 'mission') {
+                    const index = parseInt(e.target.dataset.index);
+                    missions.splice(index, 1);
+                    localStorage.setItem('missions', JSON.stringify(missions));
+                    updateMissionList();
+                    clearResults();
+                }
+            });
+
+            // Add button click handlers
+            document.getElementById('addParticipantBtn').addEventListener('click', addParticipant);
+            document.getElementById('addMissionBtn').addEventListener('click', addMission);
+            document.getElementById('drawButton').addEventListener('click', performDraw);
+
+            // Allow Enter key to add participants and missions
+            document.getElementById('participantInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addParticipant();
+                }
+            });
+
+            document.getElementById('missionInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addMission();
+                }
+            });
+        }
+
+        function showMessage(message, type = 'error') {
+            // Remove any existing message
+            const existingMessage = document.querySelector('.temp-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            // Create new message element
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `${type} temp-message`;
+            messageDiv.textContent = message;
+            messageDiv.style.marginBottom = '15px';
+            
+            // Insert at the top of the container
+            const container = document.querySelector('.container');
+            container.insertBefore(messageDiv, container.firstChild);
+            
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        function addParticipant() {
+            const input = document.getElementById('participantInput');
+            const name = input.value.trim();
+            
+            if (name === '') {
+                showMessage('Please enter a participant name');
+                input.focus();
+                return;
+            }
+            
+            if (participants.includes(name)) {
+                showMessage('This participant is already in the list');
+                input.focus();
+                return;
+            }
+            
+            participants.push(name);
+            localStorage.setItem('participants', JSON.stringify(participants));
+            input.value = '';
+            updateParticipantList();
+            clearResults();
+        }
+
+        function updateParticipantList() {
+            const list = document.getElementById('participantList');
+            
+            if (participants.length === 0) {
+                list.innerHTML = '<div class="empty-message">No participants yet. Add some!</div>';
+                return;
+            }
+            
+            list.innerHTML = participants.map((name, index) => {
+                const escapedName = escapeHtml(name);
+                return `
+                    <div class="list-item">
+                        <span>${escapedName}</span>
+                        <button class="btn-danger" data-type="participant" data-index="${index}">Remove</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addMission() {
+            const input = document.getElementById('missionInput');
+            const mission = input.value.trim();
+            
+            if (mission === '') {
+                showMessage('Please enter a mission');
+                input.focus();
+                return;
+            }
+            
+            if (missions.includes(mission)) {
+                showMessage('This mission is already in the list');
+                input.focus();
+                return;
+            }
+            
+            missions.push(mission);
+            localStorage.setItem('missions', JSON.stringify(missions));
+            input.value = '';
+            updateMissionList();
+            clearResults();
+        }
+
+        function updateMissionList() {
+            const list = document.getElementById('missionList');
+            
+            if (missions.length === 0) {
+                list.innerHTML = '<div class="empty-message">No missions yet. Add some!</div>';
+                return;
+            }
+            
+            list.innerHTML = missions.map((mission, index) => {
+                const escapedMission = escapeHtml(mission);
+                return `
+                    <div class="list-item">
+                        <span>${escapedMission}</span>
+                        <button class="btn-danger" data-type="mission" data-index="${index}">Remove</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function shuffle(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function performDraw() {
+            const resultDiv = document.getElementById('result');
+            
+            if (participants.length === 0) {
+                resultDiv.innerHTML = '<div class="error">Please add at least one participant!</div>';
+                return;
+            }
+            
+            if (missions.length === 0) {
+                resultDiv.innerHTML = '<div class="error">Please add at least one mission!</div>';
+                return;
+            }
+
+            if (participants.length > missions.length) {
+                resultDiv.innerHTML = '<div class="error">You need at least as many missions as participants!</div>';
+                return;
+            }
+            
+            // Special case: with only 1 participant, they can't pick someone else
+            if (participants.length === 1) {
+                resultDiv.innerHTML = '<div class="error">You need at least 2 participants for a proper draw!</div>';
+                return;
+            }
+            
+            // Create a Secret Santa style assignment where each person picks someone else
+            // This ensures no one picks themselves and everyone picks exactly one person
+            let namesToPick = [...participants];
+            let attempts = 0;
+            let validAssignment = false;
+            
+            // Try to create a valid assignment (sometimes random shuffles can create impossible scenarios)
+            while (!validAssignment && attempts < 100) {
+                namesToPick = shuffle([...participants]);
+                validAssignment = true;
+                
+                // Check if anyone would pick themselves
+                for (let i = 0; i < participants.length; i++) {
+                    if (participants[i] === namesToPick[i]) {
+                        validAssignment = false;
+                        break;
+                    }
+                }
+                attempts++;
+            }
+            
+            // If we couldn't find a valid assignment with shuffling, use a rotation method
+            if (!validAssignment) {
+                namesToPick = [...participants];
+                // Rotate the array by 1 position to ensure no one picks themselves
+                const first = namesToPick.shift();
+                namesToPick.push(first);
+            }
+            
+            // Shuffle missions
+            const shuffledMissions = shuffle(missions);
+            
+            // Assign names and missions
+            drawnResults = participants.map((participant, index) => {
+                return {
+                    participant: participant,
+                    pickedName: namesToPick[index],
+                    mission: shuffledMissions[index % shuffledMissions.length]
+                };
+            });
+            
+            displayResults();
+        }
+
+        function displayResults() {
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = `
+                <div class="result">
+                    <h3>🎊 Draw Results 🎊</h3>
+                    ${drawnResults.map(result => {
+                        const escapedParticipant = escapeHtml(result.participant);
+                        const escapedPickedName = escapeHtml(result.pickedName);
+                        const escapedMission = escapeHtml(result.mission);
+                        return `
+                            <div class="result-item">
+                                <div class="result-name">${escapedParticipant}</div>
+                                <div class="result-mission">
+                                    Picks: <strong>${escapedPickedName}</strong><br>
+                                    <span class="mission-label">Mission:</span> ${escapedMission}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function clearResults() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            drawnResults = [];
+        }
+    </script>
+</body>
+</html>
