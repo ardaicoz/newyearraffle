@@ -1,0 +1,25 @@
+{
+  "name": "newyearraffle",
+  "version": "1.0.0",
+  "description": "Multi-user New Year's raffle with name drawing and mission assignment",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "init-db": "node init-db.js"
+  },
+  "keywords": ["raffle", "gift-exchange", "new-year"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.2.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

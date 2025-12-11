@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangal Yeni Yıl Çekilişi 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 2.8em;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .fancy-intro {
+            font-style: italic;
+            color: #764ba2;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .stats {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            animation: fadeIn 1s ease;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Name Selection Screen */
+        #nameSelectionScreen {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .name-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .name-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .name-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .name-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Draw Screen */
+        #drawScreen {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .selected-name {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        }
+
+        .draw-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 20px 50px;
+            font-size: 1.4em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .draw-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .draw-button:active {
+            transform: translateY(0);
+        }
+
+        .draw-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading Animation */
+        #loadingScreen {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            margin: 30px auto;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 1.3em;
+            color: #667eea;
+            margin: 20px 0;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-messages {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 20px;
+            min-height: 30px;
+        }
+
+        /* Result Screen */
+        #resultScreen {
+            animation: zoomIn 0.6s ease;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+        }
+
+        .result-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .result-picked {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-mission-label {
+            font-size: 1.3em;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .result-mission {
+            font-size: 1.4em;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f5576c;
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        .back-button {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .error {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c00;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            animation: shake 0.5s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .name-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            .name-button {
+                padding: 15px;
+                font-size: 1em;
+            }
+
+            .result-picked {
+                font-size: 2em;
+            }
+
+            .result-mission {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="fancy-intro">Mangal Cart Curt gururla sunar:</div>
+        <h1>🎉 Yılbaşı Çekilişi 🎁</h1>
+    
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">Toplam</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="drawnCount">0</div>
+                <div class="stat-label">Çekilen</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="remainingCount">0</div>
+                <div class="stat-label">Kalan</div>
+            </div>
+        </div>
+
+        <!-- Screen 1: Name Selection -->
+        <div id="nameSelectionScreen">
+            <p class="subtitle">Lütfen isminizi seçin</p>
+            <div id="nameGrid" class="name-grid">
+                <!-- Names will be populated here -->
+            </div>
+            <div id="nameError" class="error hidden"></div>
+        </div>
+
+        <!-- Screen 2: Draw Button -->
+        <div id="drawScreen" class="hidden">
+            <div class="selected-name">
+                <div>Seçilen: <span id="selectedNameDisplay"></span></div>
+            </div>
+            <button id="drawButton" class="draw-button">
+                🎲 İsmi ve Görevi Çek!
+            </button>
+            <br>
+            <button id="backButton" class="back-button">← Geri</button>
+        </div>
+
+        <!-- Screen 3: Loading -->
+        <div id="loadingScreen" class="hidden">
+            <div class="spinner"></div>
+            <div class="loading-text">✨ Eşleşmeniz oluşturuluyor... ✨</div>
+            <div class="loading-messages" id="loadingMessages"></div>
+        </div>
+
+        <!-- Screen 4: Result -->
+        <div id="resultScreen" class="hidden">
+            <div class="result-box">
+                <div class="result-title">🎊 Eşleşmeniz 🎊</div>
+                <div class="result-picked" id="resultPicked"></div>
+                <div class="result-mission-label">🎯 Göreviniz:</div>
+                <div class="result-mission" id="resultMission"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        let selectedParticipant = null;
+        let availableParticipants = [];
+
+        // Screen elements
+        const nameSelectionScreen = document.getElementById('nameSelectionScreen');
+        const drawScreen = document.getElementById('drawScreen');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const resultScreen = document.getElementById('resultScreen');
+
+        // Initialize the app
+        async function init() {
+            await loadStats();
+            await loadAvailableParticipants();
+        }
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE}/api/stats`);
+                const stats = await response.json();
+                
+                document.getElementById('totalCount').textContent = stats.total;
+                document.getElementById('drawnCount').textContent = stats.drawn;
+                document.getElementById('remainingCount').textContent = stats.remaining;
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        // Load available participants
+        async function loadAvailableParticipants() {
+            try {
+                const response = await fetch(`${API_BASE}/api/available-participants`);
+                availableParticipants = await response.json();
+                
+                const nameGrid = document.getElementById('nameGrid');
+                
+                if (availableParticipants.length === 0) {
+                    nameGrid.innerHTML = '<div class="error">Tüm katılımcılar çekilişlerini yaptı! 🎉</div>';
+                    return;
+                }
+                
+                nameGrid.innerHTML = availableParticipants.map(name => 
+                    `<button class="name-button" onclick="selectName('${escapeHtml(name)}')">${escapeHtml(name)}</button>`
+                ).join('');
+            } catch (error) {
+                console.error('Failed to load participants:', error);
+                showError('Katılımcılar yüklenemedi. Lütfen sayfayı yenileyin.');
+            }
+        }
+
+        // Select a name
+        function selectName(name) {
+            selectedParticipant = name;
+            document.getElementById('selectedNameDisplay').textContent = name;
+            
+            // Switch to draw screen
+            showScreen('draw');
+        }
+
+        // Back to name selection
+        document.getElementById('backButton').addEventListener('click', () => {
+            selectedParticipant = null;
+            showScreen('selection');
+        });
+
+        // Perform the draw
+        document.getElementById('drawButton').addEventListener('click', async () => {
+            if (!selectedParticipant) return;
+            
+            showScreen('loading');
+            
+            // Fancy loading messages
+            const messages = [
+                'İsimler karıştırılıyor...',
+                'Çekiliş tanrılarıyla konuşuluyor...',
+                'Mükemmel eşleşme hazırlanıyor...',
+                'Neredeyse hazır...'
+            ];
+            
+            let messageIndex = 0;
+            const messageInterval = setInterval(() => {
+                document.getElementById('loadingMessages').textContent = messages[messageIndex];
+                messageIndex = (messageIndex + 1) % messages.length;
+            }, 800);
+            
+            // Add some suspense with a minimum delay
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/draw`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ participant: selectedParticipant })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to perform draw');
+                }
+                
+                const result = await response.json();
+                
+                clearInterval(messageInterval);
+                
+                // Show result
+                document.getElementById('resultPicked').textContent = result.pickedName;
+                document.getElementById('resultMission').textContent = result.mission;
+                
+                showScreen('result');
+                createConfetti();
+                
+                // Reload stats
+                await loadStats();
+            } catch (error) {
+                clearInterval(messageInterval);
+                console.error('Draw failed:', error);
+                showError(error.message);
+                showScreen('draw');
+            }
+        });
+
+        // Show a specific screen
+        function showScreen(screen) {
+            nameSelectionScreen.classList.add('hidden');
+            drawScreen.classList.add('hidden');
+            loadingScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            
+            switch(screen) {
+                case 'selection':
+                    nameSelectionScreen.classList.remove('hidden');
+                    break;
+                case 'draw':
+                    drawScreen.classList.remove('hidden');
+                    break;
+                case 'loading':
+                    loadingScreen.classList.remove('hidden');
+                    break;
+                case 'result':
+                    resultScreen.classList.remove('hidden');
+                    break;
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('nameError');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Create confetti animation
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#ffd700', '#00ff00'];
+            const container = document.querySelector('.container');
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    container.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Start the app
+        init();
+    </script>
+</body>
+</html>

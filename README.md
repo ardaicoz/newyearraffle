@@ -1,69 +1,149 @@
 # 🎉 New Year's Raffle 🎁
 
-A simple web-based draw names application for organizing a New Year's gift exchange raffle with missions!
+A multi-user web application for organizing a New Year's gift exchange raffle with missions and persistence!
 
 ## 📝 Description
 
 This application helps you organize a fun gift exchange where each participant:
-1. Draws another person's name (Secret Santa style)
-2. Gets assigned a mission that determines what type of gift they should buy
+1. Selects their name from a list of available participants
+2. Draws another person's name (Secret Santa style)
+3. Gets assigned a mission that determines what type of gift they should buy
+4. Once drawn, their name and the picked name are removed from the pool
 
-The gift they purchase must be suitable for their assigned mission, adding an extra layer of creativity to your gift exchange!
+Perfect for office parties, family gatherings, or friend groups!
 
-## 🚀 How to Use
+## 🚀 Quick Start
 
-1. **Open the Application**: Simply open `index.html` in your web browser
-2. **Add Participants**: Enter the names of everyone participating in the raffle
-3. **Add Missions**: Enter different mission types (e.g., "Buy something funny", "Buy something cozy", "Buy something practical")
-4. **Draw Names & Missions**: Click the "Draw Names & Missions!" button to randomly assign:
-   - Who each person should buy a gift for
-   - What mission they should follow when choosing the gift
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Initialize the database with your participants and missions
+npm run init-db
+
+# Start the server
+npm start
+```
+
+Visit http://localhost:3000 and start the raffle!
+
+## 🎮 How to Use
+
+1. **Select Your Name**: Each participant opens the website and selects their name from the available list
+2. **Draw**: Click the "Draw Names & Mission!" button
+3. **See Results**: After a fancy animation, your assigned person and mission are revealed
+4. **One Draw Per Person**: Once you draw, your name is removed from the list
+5. **Keep It Secret**: Don't share your assignment with others!
 
 ## ✨ Features
 
-- **Random Assignment**: Each participant gets randomly assigned another person's name and a mission
-- **No Self-Assignment**: The algorithm ensures no one picks their own name
-- **Unique Assignments**: Each person picks exactly one other person (Secret Santa style)
-- **Persistent Data**: Your participants and missions are saved in localStorage, so they persist across page refreshes
-- **Easy Management**: Add or remove participants and missions at any time
-- **Responsive Design**: Works on desktop and mobile devices
-- **Beautiful UI**: Modern, colorful interface with smooth animations
+- **Multi-User Support**: Multiple people can participate sequentially
+- **Persistent Database**: Uses SQLite to track who has drawn
+- **Name Tracking**: Prevents duplicate draws and ensures fairness
+- **Fancy Animations**: Loading animations, confetti, and smooth transitions
+- **Live Statistics**: See how many people have drawn vs remaining
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
+- **Beautiful UI**: Modern, colorful interface with gradient backgrounds
+- **API Endpoints**: RESTful API for future extensions
+
+## ⚙️ Configuration
+
+Edit `config.js` to customize:
+
+```javascript
+module.exports = {
+  participants: [
+    'Alice', 'Bob', 'Charlie', 'Diana',
+    // Add your participants here
+  ],
+  
+  missions: [
+    'Buy something funny that will make everyone laugh',
+    'Buy something cozy and comfortable',
+    // Add your missions here
+  ]
+};
+```
+
+After editing, run `npm run init-db` to reset the database.
+
+## 🌐 Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+
+**Quick Deploy to Render:**
+1. Push to GitHub
+2. Connect to Render
+3. Set build command: `npm install && npm run init-db`
+4. Set start command: `npm start`
+5. Deploy!
+
+## 🛠️ Technical Stack
+
+- **Backend**: Node.js + Express
+- **Database**: SQLite (better-sqlite3)
+- **Frontend**: Vanilla HTML/CSS/JavaScript
+- **Deployment**: Ready for Render, Railway, Heroku, or any Node.js host
+
+## 📊 API Endpoints
+
+- `GET /api/available-participants` - Get list of participants who haven't drawn yet
+- `GET /api/stats` - Get raffle statistics (total, drawn, remaining)
+- `GET /api/draws` - Get all draw results (admin view)
+- `POST /api/draw` - Perform a draw for a participant
+- `POST /api/reset` - Reset the entire raffle
+
+## 🔄 Resetting the Raffle
+
+```bash
+# Re-initialize the database
+npm run init-db
+```
+
+Or via API:
+```bash
+curl -X POST http://localhost:3000/api/reset
+```
 
 ## 🎯 Example Missions
 
-- Buy something funny
-- Buy something cozy
-- Buy something practical
-- Buy something creative
-- Buy something handmade
-- Buy something nostalgic
-- Buy something edible
-- Buy something decorative
+- Buy something funny that will make everyone laugh
+- Buy something cozy and comfortable
+- Buy something practical and useful
+- Buy something creative and artistic
+- Buy something handmade or DIY
+- Buy something nostalgic from the past
+- Buy something edible and delicious
+- Buy something decorative for the home
+- Buy something tech-related
+- Buy something for self-care and relaxation
 
-## 🛠️ Technical Details
+## 📱 Development
 
-- **Pure HTML/CSS/JavaScript**: No dependencies or build process required
-- **localStorage**: Data persists between sessions
-- **Mobile Responsive**: Works on all screen sizes
-
-## 📱 Running Locally
-
-Simply open the `index.html` file in any modern web browser. No server required!
-
-If you want to run it on a local server:
 ```bash
-# Using Python 3
-python3 -m http.server 8000
+# Install dev dependencies
+npm install
 
-# Then open http://localhost:8000 in your browser
+# Run with auto-reload
+npm run dev
 ```
 
 ## 🎨 Customization
 
-Feel free to customize:
-- Colors and styling in the CSS section
-- Default mission examples
-- UI text and emojis
-- Draw logic if you want different assignment rules
+- Edit `config.js` for participants and missions
+- Modify `public/index.html` for UI changes
+- Update `server.js` for backend logic
+
+## 🤝 Contributing
+
+Feel free to submit issues or pull requests!
+
+## 📄 License
+
+MIT
+
+---
 
 Enjoy your New Year's raffle! 🎊
