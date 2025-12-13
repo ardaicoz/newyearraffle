@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - New Year's Raffle</title>
+    <title>Yönetici - Yeni Yıl Çekilişi</title>
     <style>
         * {
             margin: 0;
@@ -22,7 +22,7 @@
             background: white;
             border-radius: 20px;
             padding: 40px;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
@@ -33,6 +33,12 @@
             text-align: center;
         }
 
+        h2 {
+            color: #667eea;
+            margin: 30px 0 20px 0;
+            font-size: 1.5em;
+        }
+
         .warning {
             background: #fff3cd;
             border: 2px solid #ffc107;
@@ -41,6 +47,42 @@
             border-radius: 10px;
             margin-bottom: 30px;
             text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .stats-grid {
@@ -73,6 +115,7 @@
             gap: 15px;
             margin-bottom: 30px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         button {
@@ -101,6 +144,100 @@
 
         .btn-danger:hover {
             background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .participants-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .participant-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            transition: all 0.3s ease;
+        }
+
+        .participant-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .participant-mission {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .participant-actions {
+            display: flex;
+            gap: 10px;
         }
 
         .results-table {
@@ -138,9 +275,119 @@
             color: #667eea;
         }
 
+        .success-message,
+        .error-message {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden-text {
+            color: #999;
+            letter-spacing: 2px;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+        }
+
+        .integrity-report {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .integrity-report h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .integrity-item {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .integrity-item.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .integrity-item.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .integrity-item.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .test-section {
+            background: #e8f4fd;
+            border: 2px dashed #17a2b8;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .test-section h3 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
+            }
+
+            .participant-card {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .participant-actions {
+                width: 100%;
+                justify-content: flex-end;
             }
 
             .results-table {
@@ -156,41 +403,190 @@
 </head>
 <body>
     <div class="container">
-        <h1>🔐 Admin Panel</h1>
+        <h1>🔐 Yönetici Paneli</h1>
         <div class="warning">
-            ⚠️ This page shows all raffle results. Keep it confidential!
+            ⚠️ Bu sayfa tüm çekiliş sonuçlarını gösterir ve katılımcı yönetimine izin verir. Gizli tutun!
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number" id="totalCount">-</div>
-                <div class="stat-label">Total Participants</div>
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('participants')">👥 Katılımcıları Yönet</button>
+            <button class="tab" onclick="switchTab('results')">📊 Sonuçları Görüntüle</button>
+        </div>
+
+        <!-- Participants Tab -->
+        <div id="participantsTab" class="tab-content active">
+            <h2>Yeni Katılımcı Ekle</h2>
+            <div class="form-section">
+                <div id="participantMessage"></div>
+                <form id="addParticipantForm" onsubmit="addParticipant(event)">
+                    <div class="form-group">
+                        <label for="participantName">İsim</label>
+                        <input type="text" id="participantName" placeholder="Katılımcı ismini girin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participantMission">Görev</label>
+                        <textarea id="participantMission" placeholder="Bu katılımcı için görevi girin" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-success">➕ Katılımcı Ekle</button>
+                </form>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="drawnCount">-</div>
-                <div class="stat-label">Completed Draws</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="remainingCount">-</div>
-                <div class="stat-label">Remaining</div>
+
+            <h2>Mevcut Katılımcılar</h2>
+            <div id="participantsList" class="loading">Katılımcılar yükleniyor...</div>
+
+            <div class="test-section">
+                <h3>🧪 Test Araçları</h3>
+                <div id="testMessage"></div>
+                <div class="test-buttons">
+                    <button class="btn-info" onclick="addTestData()">➕ 5 Test Katılımcısı Ekle</button>
+                    <button class="btn-danger" onclick="clearAllData()">🗑️ Tüm Verileri Temizle</button>
+                </div>
             </div>
         </div>
 
-        <div class="actions">
-            <button class="btn-primary" onclick="loadData()">🔄 Refresh</button>
-            <button class="btn-danger" onclick="resetRaffle()">🗑️ Reset Raffle</button>
-            <button class="btn-primary" onclick="window.location.href='/'">🏠 Home</button>
-        </div>
+        <!-- Results Tab -->
+        <div id="resultsTab" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCount">-</div>
+                    <div class="stat-label">Toplam Katılımcı</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="drawnCount">-</div>
+                    <div class="stat-label">Tamamlanan Çekilişler</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="remainingCount">-</div>
+                    <div class="stat-label">Kalan</div>
+                </div>
+            </div>
 
-        <div id="resultsContainer">
-            <div class="loading">Loading results...</div>
+            <div class="actions">
+                <button class="btn-primary" onclick="loadResults()">🔄 Yenile</button>
+                <button class="btn-warning" id="toggleHideBtn" onclick="toggleHideResults()">👁️ Sonuçları Göster</button>
+                <button class="btn-info" onclick="checkIntegrity()">🔍 Bütünlük Kontrolü</button>
+                <button class="btn-danger" onclick="resetRaffle()">🗑️ Çekilişi Sıfırla</button>
+                <button class="btn-primary" onclick="window.location.href='/'">🏠 Ana Sayfa</button>
+            </div>
+
+            <div id="integrityReport"></div>
+            
+            <div id="resultsContainer">
+                <div class="loading">Sonuçlar yükleniyor...</div>
+            </div>
         </div>
     </div>
 
     <script>
         const API_BASE = window.location.origin;
+        let isResultsHidden = true; // Default to hidden
 
-        async function loadData() {
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+
+            if (tabName === 'participants') {
+                loadParticipants();
+            } else if (tabName === 'results') {
+                loadResults();
+            }
+        }
+
+        // Participants Management
+        async function loadParticipants() {
+            try {
+                const response = await fetch(`${API_BASE}/api/participants`);
+                const participants = await response.json();
+                
+                const container = document.getElementById('participantsList');
+                
+                if (participants.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Henüz katılımcı yok. Yukarıdan ilk katılımcınızı ekleyin!</div>';
+                    return;
+                }
+                
+                container.innerHTML = `
+                    <div class="participants-list">
+                        ${participants.map(p => `
+                            <div class="participant-card">
+                                <div class="participant-info">
+                                    <div class="participant-name">${escapeHtml(p.name)}</div>
+                                    <div class="participant-mission">${escapeHtml(p.mission)}</div>
+                                </div>
+                                <div class="participant-actions">
+                                    <button class="btn-danger btn-small" onclick="deleteParticipant('${escapeHtml(p.name)}')"> 🗑️ Sil</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Failed to load participants:', error);
+                document.getElementById('participantsList').innerHTML = '<div class="empty-state">Katılımcılar yüklenirken hata oluştu.</div>';
+            }
+        }
+
+        async function addParticipant(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('participantName').value.trim();
+            const mission = document.getElementById('participantMission').value.trim();
+            const messageDiv = document.getElementById('participantMessage');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/participants`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, mission })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Katılımcı eklenemedi');
+                }
+                
+                messageDiv.innerHTML = '<div class="success-message">✅ Katılımcı başarıyla eklendi!</div>';
+                document.getElementById('addParticipantForm').reset();
+                await loadParticipants();
+                
+                setTimeout(() => {
+                    messageDiv.innerHTML = '';
+                }, 3000);
+            } catch (error) {
+                console.error('Failed to add participant:', error);
+                messageDiv.innerHTML = `<div class="error-message">❌ ${error.message}</div>`;
+            }
+        }
+
+        async function deleteParticipant(name) {
+            if (!confirm(`${name} isimli katılımcıyı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/participants/${encodeURIComponent(name)}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Katılımcı silinemedi');
+                }
+                
+                await loadParticipants();
+            } catch (error) {
+                console.error('Failed to delete participant:', error);
+                alert(`❌ ${error.message}`);
+            }
+        }
+
+        // Results Management
+        async function loadResults() {
             await loadStats();
             await loadDraws();
         }
@@ -208,6 +604,17 @@
             }
         }
 
+        function toggleHideResults() {
+            isResultsHidden = !isResultsHidden;
+            const btn = document.getElementById('toggleHideBtn');
+            btn.textContent = isResultsHidden ? '👁️ Sonuçları Göster' : '🙈 Sonuçları Gizle';
+            loadDraws();
+        }
+
+        function hideText(text) {
+            return '•'.repeat(Math.max(text.length, 8));
+        }
+
         async function loadDraws() {
             try {
                 const response = await fetch(`${API_BASE}/api/draws`);
@@ -216,7 +623,7 @@
                 const container = document.getElementById('resultsContainer');
                 
                 if (draws.length === 0) {
-                    container.innerHTML = '<div class="empty-state">No draws yet. Participants should start selecting their names!</div>';
+                    container.innerHTML = '<div class="empty-state">Henüz çekiliş yok. Katılımcılar isimlerini seçmeye başlamalı!</div>';
                     return;
                 }
                 
@@ -225,10 +632,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Participant</th>
-                                <th>Picked Name</th>
-                                <th>Mission</th>
-                                <th>Drawn At</th>
+                                <th>Katılımcı</th>
+                                <th>Seçilen Kişi</th>
+                                <th>Görev</th>
+                                <th>Çekim Tarihi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -236,8 +643,8 @@
                                 <tr>
                                     <td>${index + 1}</td>
                                     <td><strong>${escapeHtml(draw.participant)}</strong></td>
-                                    <td>${escapeHtml(draw.picked_name)}</td>
-                                    <td>${escapeHtml(draw.mission)}</td>
+                                    <td>${isResultsHidden ? `<span class="hidden-text">${hideText(draw.picked_name)}</span>` : escapeHtml(draw.picked_name)}</td>
+                                    <td>${isResultsHidden ? `<span class="hidden-text">${hideText(draw.mission)}</span>` : escapeHtml(draw.mission)}</td>
                                     <td>${new Date(draw.drawn_at).toLocaleString()}</td>
                                 </tr>
                             `).join('')}
@@ -246,16 +653,131 @@
                 `;
             } catch (error) {
                 console.error('Failed to load draws:', error);
-                document.getElementById('resultsContainer').innerHTML = '<div class="empty-state">Error loading results.</div>';
+                document.getElementById('resultsContainer').innerHTML = '<div class="empty-state">Sonuçlar yüklenirken hata oluştu.</div>';
+            }
+        }
+
+        async function checkIntegrity() {
+            const reportDiv = document.getElementById('integrityReport');
+            reportDiv.innerHTML = '<div class="loading">Bütünlük kontrol ediliyor...</div>';
+            
+            try {
+                const [drawsResponse, participantsResponse] = await Promise.all([
+                    fetch(`${API_BASE}/api/draws`),
+                    fetch(`${API_BASE}/api/participants`)
+                ]);
+                
+                const draws = await drawsResponse.json();
+                const allParticipants = await participantsResponse.json();
+                
+                const issues = [];
+                const warnings = [];
+                const successes = [];
+                
+                // Check 1: No duplicate participants (someone drawing twice)
+                const participantCounts = {};
+                draws.forEach(draw => {
+                    participantCounts[draw.participant] = (participantCounts[draw.participant] || 0) + 1;
+                });
+                
+                const duplicateDrawers = Object.entries(participantCounts).filter(([name, count]) => count > 1);
+                if (duplicateDrawers.length > 0) {
+                    duplicateDrawers.forEach(([name, count]) => {
+                        issues.push(`❌ ${name} ${count} kez çekti (sadece bir kez çekmeli)`);
+                    });
+                } else if (draws.length > 0) {
+                    successes.push('✅ Tekrar eden çekim yok - herkes sadece bir kez çekti');
+                }
+                
+                // Check 2: No one picked themselves
+                const selfPicks = draws.filter(draw => draw.participant === draw.picked_name);
+                if (selfPicks.length > 0) {
+                    selfPicks.forEach(draw => {
+                        issues.push(`❌ ${draw.participant} kendini seçti (izin verilmez)`);
+                    });
+                } else if (draws.length > 0) {
+                    successes.push('✅ Kendini seçen yok - herkes başkasını seçti');
+                }
+                
+                // Check 3: Check for duplicate picked names
+                const pickedCounts = {};
+                draws.forEach(draw => {
+                    pickedCounts[draw.picked_name] = (pickedCounts[draw.picked_name] || 0) + 1;
+                });
+                
+                const duplicatePicked = Object.entries(pickedCounts).filter(([name, count]) => count > 1);
+                if (duplicatePicked.length > 0) {
+                    duplicatePicked.forEach(([name, count]) => {
+                        warnings.push(`⚠️ ${name} ${count} kez seçildi (kasitli olabilir)`);
+                    });
+                } else if (draws.length > 0) {
+                    successes.push('✅ Tekrar eden seçim yok - herkes farklı kişiler seçti');
+                }
+                
+                // Check 4: Verify missions match the picked person
+                for (const draw of draws) {
+                    const participant = allParticipants.find(p => p.name === draw.picked_name);
+                    if (participant && participant.mission !== draw.mission) {
+                        issues.push(`❌ ${draw.participant} → ${draw.picked_name} için görev uyuşmazlığı: görev eşleşmiyor`);
+                    }
+                }
+                if (draws.length > 0 && !issues.some(i => i.includes('görev uyuşmazlığı'))) {
+                    successes.push('✅ Tüm görevler seçilen katılımcılarla doğru eşleşiyor');
+                }
+                
+                // Check 5: Statistics
+                const totalParticipants = allParticipants.length;
+                const completedDraws = draws.length;
+                const remaining = totalParticipants - completedDraws;
+                
+                if (totalParticipants > 0) {
+                    successes.push(`ℹ️ İlerleme: ${completedDraws}/${totalParticipants} katılımcı çekti (${remaining} kalan)`);
+                }
+                
+                // Generate report
+                let reportHTML = '<div class="integrity-report"><h3>🔍 Bütünlük Kontrol Raporu</h3>';
+                
+                if (draws.length === 0) {
+                    reportHTML += '<div class="integrity-item warning">⚠️ Henüz çekim yok - kontrol edilecek bir şey yok</div>';
+                } else {
+                    // Show issues first
+                    issues.forEach(issue => {
+                        reportHTML += `<div class="integrity-item error">${escapeHtml(issue)}</div>`;
+                    });
+                    
+                    // Then warnings
+                    warnings.forEach(warning => {
+                        reportHTML += `<div class="integrity-item warning">${escapeHtml(warning)}</div>`;
+                    });
+                    
+                    // Finally successes
+                    successes.forEach(success => {
+                        reportHTML += `<div class="integrity-item success">${escapeHtml(success)}</div>`;
+                    });
+                    
+                    // Overall status
+                    if (issues.length === 0) {
+                        reportHTML += '<div class="integrity-item success" style="margin-top: 15px; font-weight: bold;">✅ Genel: Tüm bütünlük kontrolleri geçti!</div>';
+                    } else {
+                        reportHTML += `<div class="integrity-item error" style="margin-top: 15px; font-weight: bold;">❌ Genel: ${issues.length} kritik sorun bulundu</div>`;
+                    }
+                }
+                
+                reportHTML += '</div>';
+                reportDiv.innerHTML = reportHTML;
+                
+            } catch (error) {
+                console.error('Failed to check integrity:', error);
+                reportDiv.innerHTML = '<div class="integrity-report"><div class="integrity-item error">❌ Bütünlük kontrol edilemedi. Lütfen tekrar deneyin.</div></div>';
             }
         }
 
         async function resetRaffle() {
-            if (!confirm('⚠️ Are you sure you want to reset the entire raffle? This will delete all draws and start fresh!')) {
+            if (!confirm('⚠️ Tüm çekilişi sıfırlamak istediğinize emin misiniz? Bu, tüm çekimleri silecek ve yeniden başlatacak!')) {
                 return;
             }
             
-            if (!confirm('⚠️ This action cannot be undone! All participants will need to draw again.')) {
+            if (!confirm('⚠️ Bu işlem geri alınamaz! Tüm katılımcıların tekrar çekmesi gerekecek.')) {
                 return;
             }
             
@@ -265,14 +787,14 @@
                 });
                 
                 if (!response.ok) {
-                    throw new Error('Failed to reset raffle');
+                    throw new Error('Çekiliş sıfırlanamadı');
                 }
                 
-                alert('✅ Raffle has been reset successfully!');
-                await loadData();
+                alert('✅ Çekiliş başarıyla sıfırlandı!');
+                await loadResults();
             } catch (error) {
                 console.error('Failed to reset raffle:', error);
-                alert('❌ Failed to reset raffle. Please try again.');
+                alert('❌ Çekiliş sıfırlanamadı. Lütfen tekrar deneyin.');
             }
         }
 
@@ -287,11 +809,69 @@
             return text.replace(/[&<>"']/g, m => map[m]);
         }
 
-        // Load data on page load
-        loadData();
+        // Testing functions
+        async function addTestData() {
+            const messageDiv = document.getElementById('testMessage');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/add-test-data`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Test verileri eklenemedi');
+                }
+                
+                messageDiv.innerHTML = '<div class="success-message">✅ Test katılımcıları başarıyla eklendi!</div>';
+                await loadParticipants();
+                
+                setTimeout(() => {
+                    messageDiv.innerHTML = '';
+                }, 3000);
+            } catch (error) {
+                console.error('Failed to add test data:', error);
+                messageDiv.innerHTML = `<div class="error-message">❌ ${error.message}</div>`;
+            }
+        }
 
-        // Auto-refresh every 10 seconds
-        setInterval(loadData, 10000);
+        async function clearAllData() {
+            if (!confirm('⚠️ TÜM verileri temizlemek istediğinize emin misiniz? Bu, tüm katılımcıları, çekimleri ve her şeyi silecek!')) {
+                return;
+            }
+            
+            if (!confirm('⚠️ Bu geri alınamaz! Kesinlikle emin misiniz?')) {
+                return;
+            }
+            
+            const messageDiv = document.getElementById('testMessage');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/clear-all`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Veriler temizlenemedi');
+                }
+                
+                messageDiv.innerHTML = '<div class="success-message">✅ Tüm veriler başarıyla temizlendi!</div>';
+                await loadParticipants();
+                
+                setTimeout(() => {
+                    messageDiv.innerHTML = '';
+                }, 3000);
+            } catch (error) {
+                console.error('Failed to clear data:', error);
+                messageDiv.innerHTML = `<div class="error-message">❌ ${error.message}</div>`;
+            }
+        }
+
+        // Load participants on page load
+        loadParticipants();
     </script>
 </body>
 </html>

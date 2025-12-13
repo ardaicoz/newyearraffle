@@ -1,26 +1,12 @@
 // Configuration file for names and missions
+// Participants are now managed through the admin interface
 module.exports = {
-  participants: [
-    'Bilge',
-    'Çağrı',
-    'Cansu',
-    'Devrim',
-    'Doğa',
-    'İçöz',
-    'Özge',
-    'Yaldız'
-  ],
+  participantMissions: {
+    // Empty - add participants through the admin panel
+  },
   
-  missions: [
-    'Buy something funny that will make everyone laugh',
-    'Buy something cozy and comfortable',
-    'Buy something practical and useful',
-    'Buy something creative and artistic',
-    'Buy something handmade or DIY',
-    'Buy something nostalgic from the past',
-    'Buy something edible and delicious',
-    'Buy something decorative for the home',
-    'Buy something tech-related',
-    'Buy something for self-care and relaxation'
-  ]
-};
+  // Keep participants list for backward compatibility
+  get participants() {
+    return Object.keys(this.participantMissions);
+  }
+}
