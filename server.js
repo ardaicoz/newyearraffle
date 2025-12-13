@@ -10,6 +10,31 @@ const PORT = process.env.PORT || 3000;
 // Initialize database
 const db = new Database('raffle.db');
 
+// Create tables if they don't exist
+db.exec(`
+  CREATE TABLE IF NOT EXISTS participants (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    mission TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS draws (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    participant TEXT NOT NULL UNIQUE,
+    picked_name TEXT NOT NULL,
+    mission TEXT NOT NULL,
+    drawn_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS available_names (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    mission TEXT NOT NULL
+  );
+`);
+
+console.log('✅ Database tables initialized');
+
 // Middleware
 app.use(cors());
 app.use(express.json());
